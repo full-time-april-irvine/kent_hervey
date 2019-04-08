@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" type="text/css" href = "../static/style.css"> -->
+    <title>Lists demo</title>    
+    
+</head>
+<body>
+
+
+<form action='/users' method='post'>
+  <div>
+    Your Name: <input type='text' name='name'>
+  </div>
+  <div>
+      Dojo Location:
+      <select name="DojoLocation" >
+        <option value="dallas" >Dallas</option>
+        <option value="houston">Houston</option>
+        <option value="abiline">Abiline</option>
+        <option value="waco">Waco</option>
+      </select>
+  </div>
+  <div>
+      Favorite Language:
+      <select name="FavLanguage">
+        <option value="python">Python</option>
+        <option value="java" >Java</option>
+        <option value="C_sharp">C#</option>
+        <option value="fortran">FORTRAN</option>
+      </select>
+  </div>
+  <div>
+    <h5>
+      Comments (optional)
+    </h5>
+    <textarea rows ="4" cols = "50" name="comment_space">
+    </textarea>
+  </div>
+  <div>
+    <input type='submit' value='Button'>
+  </div>
+</form>
+</body>
+</html>

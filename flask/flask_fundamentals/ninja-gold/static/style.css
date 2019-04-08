@@ -1,0 +1,77 @@
+#wrapper {
+    border:  solid 1px gray;
+    width:  1050px;
+    padding:  25px;
+    background-color: rgb(67, 128, 136);
+}
+
+.topText {
+    width:  980px;
+}
+
+.yourgold {
+    height: 20px;
+    width: 75px;
+    display: inline-block;
+}
+
+.goldbox {
+    border: black solid 1px;
+    height: 20px;
+    width: 45px;
+    display: inline-block;
+}
+
+.locationbox {
+    vertical-align: top;
+    background-color: rgb(16, 250, 16);
+    border: solid 2px black;
+    display: inline-block;
+    text-align: center; 
+    width: 180px;
+    height: 130px;
+}
+
+.locationbox:nth-of-type(2) { /* this says to do styling on the second location box */
+    margin-left: 50px;
+    margin-right: 50px;
+    }
+
+.locationbox:nth-of-type(3) { /* this says to do styling on the second location box */
+
+    margin-right: 50px;
+    }
+
+.activities_label {
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+.activityBox {
+    width: 900px;
+    overflow: auto;
+    border: solid 2px black;
+    height: 150px;
+    background-color: white;
+}
+
+
+.won_activities {
+    display: block;
+    color: green;
+    align-items: center;
+    margin-left: 0px;
+    margin-bottom: 2px;
+    margin-top: 2px;
+}
+
+.lost_activities {
+    display: block;
+    color: red;
+    align-items: center;
+    margin-left: 0px;
+    margin-bottom: 2px;
+    margin-top: 2px;
+
+}
+

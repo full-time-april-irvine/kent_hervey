@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- linking a css style sheet -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='mystyle.css') }}">
+
+    <title>Playground</title>    
+    <style>
+            body {
+              background-color: linen;
+            }
+    .box {
+    display:inline-block;
+    border: 1px black;
+    width: 80px;
+    height: 80px;
+    padding: 5;
+    margin: 5;
+    }
+
+.color1 {
+    background-color: red;
+}
+
+.color2 {
+    background-color: black;
+}
+
+
+    </style>
+
+</head>
+<body>
+  <div class ="checkerboard">
+    {% for row in range(rows_cols) %}
+      <div class= "row"></div>
+        {% for box in range(rows_cols) %}
+          {% if row%2 == 0 %}
+            {% if box%2 == 0 %}
+              <div class="box color1"></div>
+            {%else %}
+              <div class="box color2"></div>
+            {% endif %}
+          {% else %}
+            {% if box%2 == 0 %}
+              <div class="box color2"></div>
+            {% else %}
+              <div class="box color1"></div>
+            {% endif %}
+          {% endif %}
+        {% endfor %}
+      </div>
+    {% endfor %}
+  </div>
+
+    
+</body>
+</html>

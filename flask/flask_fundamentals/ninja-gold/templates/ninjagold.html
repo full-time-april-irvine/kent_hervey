@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" type="text/css" href = "../static/style.css">
+    <title>Ninja Gold</title>    
+    
+</head>
+  <body>
+    <div id="wrapper"> <!--The container for everything on the page-->
+      <div class="topText">  <!--Contains the top row which is just Your Gold:  and a box to hold the gold-->
+          <p class=yourgold>
+            Your Gold:
+          </p>
+        <p class="goldbox">
+          {{ gold_count }}
+        </p>
+      </div> 
+      <div> <!--Horizontal Div that will contain the four boxes of locations/forms-->
+        <div class="locationbox"> <!--Farm Div-->
+          <p class="topLocation">
+            Farm
+          </p>
+          <p class="middleLocation">
+            (earns 10-20 golds)
+          </p>
+          <form class=locationSubmit action='/process_money' method='post'>
+            <input type="hidden" name="locationclick" value="farm">
+            <input class = needclass  type='submit' value='Submit'>
+          </form>
+        </div>
+        <div class="locationbox"> <!--Cave Div-->
+            <p class="topLocation">
+              Cave
+            </p>
+            <p class="middleLocation">
+              (earns 5-10 golds)
+            </p>
+            <form class=locationSubmit action='/process_money' method='post'>
+              <input type="hidden" name="locationclick" value="cave">
+              <input class = needclass  type='submit' value='Submit'>
+            </form>
+        </div>
+        <div class="locationbox"> <!--House Div-->
+            <p class="topLocation">
+              House
+            </p>
+            <p class="middleLocation">
+              (earns 2-5 golds)
+            </p>
+            <form class=locationSubmit action='/process_money' method='post'>
+              <input type="hidden" name="locationclick" value="house">
+              <input class = needclass  type='submit' value='Submit'>
+            </form>
+        </div>
+        <div class="locationbox">
+          <!-- Casino Div-->
+            <p class="topLocation">
+              Casino
+            </p>
+            <p class="middleLocation">
+              (earns/takes 0-50 golds)
+            </p>
+            <form class=locationSubmit action='/process_money' method='post'>
+              <input type="hidden" name="locationclick" value="casino">
+              <input class = needclass  type='submit' value='Submit'>
+            </form>
+        </div> 
+      </div>
+      <p class="activities_label">  <!--This will just hold the "Activities:"-->
+        Activities:
+      </p>
+      <div class="activityBox"><!--This div will hold the activities-->
+        {% for activity in activity_results %}
+           {{activity|safe}}
+        {% endfor %}
+      </div>
+    </div>
+  </body>
+</html>
+<!--
+Ignore below
+<form action='/' method='post'>
+  <input type="hidden" id="custId" name="custId" value="3487">
+  <input class = needclass  type='submit' value='Submit'>
+</form>
+
+-->

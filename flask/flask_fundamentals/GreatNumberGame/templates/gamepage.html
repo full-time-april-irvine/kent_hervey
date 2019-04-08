@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" type="text/css" href = "../static/style.css">
+    <title>Lists demo</title>    
+    
+</head>
+<body>
+
+  <div id="container">
+    <div id="topText">
+      <h2>Welcome to the Great Number Game!</h2>
+      <h3>I am thinking of a number between 1 and 100</h3>
+      <h4>Take a guess</h4>
+    </div> 
+    <div>
+      <form action='/' method='post'>
+        <input type="hidden" id="custId" name="custId" value="3487">
+        <input class = needclass value = 0 type='text' name='send_guess'>
+        <input class = needclass  type='submit' value='Submit'>
+      </form> 
+    </div>
+    <div>
+      <p id="resultsDisplay">{{ sent_hilo }}</p>
+    </div>
+    <div>
+      <form action='/' method='get'>
+        <input class = needclass  type='submit' value='Reset'>
+      </form> 
+    </div>
+    <div>
+
+
+  </div>
+</body>
+</html>

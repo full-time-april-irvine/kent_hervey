@@ -1,0 +1,25 @@
+.checkerboard{
+  margin:0px;
+  padding: 0px;
+}
+
+body {
+  background-color: linen;
+}
+
+.box {
+display:inline-block;
+border:  5px solid black;
+width: 80px;
+height: 80px;
+padding: -5;
+margin: -5;
+}
+
+.color1 {
+background-color: red;
+}
+
+.color2 {
+background-color: black;
+}

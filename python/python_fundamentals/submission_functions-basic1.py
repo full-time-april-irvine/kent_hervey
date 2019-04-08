@@ -163,6 +163,29 @@ a14()
 #output  1 3 2
 #check
 
+print("/n----spacer....#15")
+#15
+def a15():
+    print (1)
+    x = b()
+    print(x)
+    return 10
+def b():
+    print (3)
+    return 5
+y = a15()
+print(y)
+#analysis  first y = a15() calls the a15 function which prints >> 1 <<
+#            x = b() calls b which prints >>> 3  <<<<  and returns 5 back to x
+#             then a15 prints x wich is >>> 5 <<<<
+#               then 10 is returned and now y has that value
+#                 print(y) outputs >>>> 10  <<<
+#output  1  3   5   10
+#check
+
+
+
+
 
 
 
