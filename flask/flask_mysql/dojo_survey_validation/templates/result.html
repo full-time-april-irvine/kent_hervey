@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+    <copyh1>Show Page</h1>
+        <div><h3>Info Submitted:</h3>
+            <p>Name: {{ name_on_template }}</p>
+            <p>Location: {{ location_on_template }}</p>
+            <p>Language: {{ language_on_template }}</p>
+            <p>Comment: {{ comment_on_template }}</p>
+        </div>
+        <div>
+            <script>
+            function goBack() {
+              window.history.back()
+            }
+            </script>
+            <button onclick="goBack()">Go Back</button>
+        </div>
+
+</body>
+</html>
