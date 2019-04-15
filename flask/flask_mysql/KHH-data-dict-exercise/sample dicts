@@ -1,0 +1,84 @@
+
+Two samples of dicts below:
+
+>>>Sample from users assignment
+Below is the code that creates the dictionary
+    @app.route('/users', methods=["GET"])   #  /users - GET - method should return a template that displays all the users in the table
+    def all_user():
+
+        mysql = connectToMySQL("user_assignment")
+        all_users = mysql.query_db("SELECT * FROM user_table;")
+        print("*"*80)
+        print("this is list of all users, all columsn", all_users)
+
+
+        return render_template("/readall.html", return_users=all_users)
+
+
+
+Below is the returned dictionary from the full select above, but under it there is a simpler example with less fields
+    >>>>Raw from terminal as copied
+this is list of all users, all columsn [{'id': 1, 'fname': 'firstNAME', 'lname': 'LASTNAME', 'email': 'jjun@gmail.com', 'created_at': datetime.datetime(2019, 4, 9, 0, 3, 58), 'updated_at': datetime.datetime(2019, 4, 9, 19, 12, 5)}, {'id': 2, 'fname': 'Andrew', 'lname': 'Lee', 'email': 'alee@gmail.com', 'created_at': datetime.datetime(2019, 4, 9, 0, 3, 58), 'updated_at': datetime.datetime(2019, 4, 9,
+ 18, 27, 11)}, {'id': 3, 'fname': 'Jay', 'lname': 'Patel', 'email': 'jpatel@gmail.com', 'created_at': datetime.datetime(2019, 4, 9, 0, 3, 58), 'updated_at': datetime.datetime(2019, 4, 9, 0, 3, 58)}, {'
+id': 4, 'fname': 'Eduardo', 'lname': 'Baikaa', 'email': 'ebaik@gmail.com', 'created_at': datetime.datetime(2019, 4, 9, 0, 3, 58), 'updated_at': datetime.datetime(2019, 4, 9, 18, 18, 51)}, {'id': 5, 'fn
+ame': 'fred', 'lname': 'jonesa', 'email': 'bob@jones.com', 'created_at': datetime.datetime(2019, 4, 9, 15, 14, 11), 'updated_at': datetime.datetime(2019, 4, 9, 18, 21, 49)}, {'id': 6, 'fname': 'fred',
+'lname': 'jones', 'email': 'bob@jones.com', 'created_at': datetime.datetime(2019, 4, 9, 15, 15, 54), 'updated_at': datetime.datetime(2019, 4, 9, 15, 15, 54)}, {'id': 7, 'fname': 'bob', 'lname': 'jones'
+, 'email': 'bob@jones.com', 'created_at': datetime.datetime(2019, 4, 9, 15, 16, 14), 'updated_at': datetime.datetime(2019, 4, 9, 15, 16, 14)}, {'id': 8, 'fname': 'bob', 'lname': 'jones', 'email': 'bob@
+jones.com', 'created_at': datetime.datetime(2019, 4, 9, 15, 19, 22), 'updated_at': datetime.datetime(2019, 4, 9, 15, 19, 22)}, {'id': 9, 'fname': 'bob', 'lname': 'jones', 'email': 'bob@jones.com', 'cre
+ated_at': datetime.datetime(2019, 4, 9, 15, 19, 52), 'updated_at': datetime.datetime(2019, 4, 9, 15, 19, 52)}, {'id': 10, 'fname': 'bobs', 'lname': 'namer', 'email': 'bob@jones.com', 'created_at': date
+time.datetime(2019, 4, 9, 15, 20, 11), 'updated_at': datetime.datetime(2019, 4, 9, 15, 20, 11)}, {'id': 11, 'fname': 'bob', 'lname': 'jon', 'email': 'bob@jones.com', 'created_at': datetime.datetime(201
+9, 4, 9, 15, 21, 56), 'updated_at': datetime.datetime(2019, 4, 9, 15, 21, 56)}, {'id': 12, 'fname': 'bob2', 'lname': 'jones2', 'email': '2@no.com', 'created_at': datetime.datetime(2019, 4, 9, 15, 22, 3
+6), 'updated_at': datetime.datetime(2019, 4, 9, 15, 22, 36)}, {'id': 13, 'fname': 'bob3', 'lname': 'jones3', 'email': '3@3.com', 'created_at': datetime.datetime(2019, 4, 9, 15, 23, 39), 'updated_at': d
+atetime.datetime(2019, 4, 9, 15, 23, 39)}, {'id': 14, 'fname': 'bob5', 'lname': 'jones5', 'email': '5@5.com', 'created_at': datetime.datetime(2019, 4, 9, 15, 27, 32), 'updated_at': datetime.datetime(20
+19, 4, 9, 15, 27, 32)}, {'id': 18, 'fname': 'shannon', 'lname': 'jones', 'email': 'no@yes.com', 'created_at': datetime.datetime(2019, 4, 9, 18, 16, 48), 'updated_at': datetime.datetime(2019, 4, 9, 18,
+16, 48)}]
+
+    >>>> Formatted After removing CR and LF and separting each dict by CRs
+    this is list of all users, all columsn 
+    [
+    {'id': 1, 'fname': 'firstNAME', 'lname': 'LASTNAME', 'email': 'jjun@gmail.com', 'created_at': datetime.datetime(2019, 4, 9, 0, 3, 58), 'updated_at': datetime.datetime(2019, 4, 9, 19, 12, 5)}, {'id': 2, 'fname': 'Andrew', 'lname': 'Lee', 'email': 'alee@gmail.com', 'created_at': datetime.datetime(2019, 4, 9, 0, 3, 58), 'updated_at': datetime.datetime(2019, 4, 9, 18, 27, 11)}, 
+    {'id': 3, 'fname': 'Jay', 'lname': 'Patel', 'email': 'jpatel@gmail.com', 'created_at': datetime.datetime(2019, 4, 9, 0, 3, 58), 'updated_at': datetime.datetime(2019, 4, 9, 0, 3, 58)}, 
+    {'id': 4, 'fname': 'Eduardo', 'lname': 'Baikaa', 'email': 'ebaik@gmail.com', 'created_at': datetime.datetime(2019, 4, 9, 0, 3, 58), 'updated_at': datetime.datetime(2019, 4, 9, 18, 18, 51)}, {'id': 5, 'fname': 'fred', 'lname': 'jonesa', 'email': 'bob@jones.com', 'created_at': datetime.datetime(2019, 4, 9, 15, 14, 11), 'updated_at': datetime.datetime(2019, 4, 9, 18, 21, 49)}, 
+    {'id': 6, 'fname': 'fred','lname': 'jones', 'email': 'bob@jones.com', 'created_at': datetime.datetime(2019, 4, 9, 15, 15, 54), 'updated_at': datetime.datetime(2019, 4, 9, 15, 15, 54)}, 
+    {'id': 7, 'fname': 'bob', 'lname': 'jones', 'email': 'bob@jones.com', 'created_at': datetime.datetime(2019, 4, 9, 15, 16, 14), 'updated_at': datetime.datetime(2019, 4, 9, 15, 16, 14)}, 
+    {'id': 8, 'fname': 'bob', 'lname': 'jones', 'email': 'bob@jones.com', 'created_at': datetime.datetime(2019, 4, 9, 15, 19, 22), 'updated_at': datetime.datetime(2019, 4, 9, 15, 19, 22)}, 
+    {'id': 9, 'fname': 'bob', 'lname': 'jones', 'email': 'bob@jones.com', 'created_at': datetime.datetime(2019, 4, 9, 15, 19, 52), 'updated_at': datetime.datetime(2019, 4, 9, 15, 19, 52)}, {'id': 10, 'fname': 'bobs', 'lname': 'namer', 'email': 'bob@jones.com', 'created_at': datetime.datetime(2019, 4, 9, 15, 20, 11), 'updated_at': datetime.datetime(2019, 4, 9, 15, 20, 11)}, 
+    {'id': 11, 'fname': 'bob', 'lname': 'jon', 'email': 'bob@jones.com', 'created_at': datetime.datetime(2019, 4, 9, 15, 21, 56), 'updated_at': datetime.datetime(2019, 4, 9, 15, 21, 56)}, 
+    {'id': 12, 'fname': 'bob2', 'lname': 'jones2', 'email': '2@no.com', 'created_at': datetime.datetime(2019, 4, 9, 15, 22, 36), 'updated_at': datetime.datetime(2019, 4, 9, 15, 22, 36)}, 
+    {'id': 13, 'fname': 'bob3', 'lname': 'jones3', 'email': '3@3.com', 'created_at': datetime.datetime(2019, 4, 9, 15, 23, 39), 'updated_at': datetime.datetime(2019, 4, 9, 15, 23, 39)}, 
+    {'id': 14, 'fname': 'bob5', 'lname': 'jones5', 'email': '5@5.com', 'created_at': datetime.datetime(2019, 4, 9, 15, 27, 32), 'updated_at': datetime.datetime(2019, 4, 9, 15, 27, 32)}, 
+    {'id': 18, 'fname': 'shannon', 'lname': 'jones', 'email': 'no@yes.com', 'created_at': datetime.datetime(2019, 4, 9, 18, 16, 48), 'updated_at': datetime.datetime(2019, 4, 9, 18,16, 48)}
+    ]
+
+
+===============================
+===================
+
+
+
+Running Query: SELECT fname, lname, email FROM user_table;
+********************************************************************************
+this is list of all users, all columsn 
+
+[
+    {'fname': 'firstNAME', 'lname': 'LASTNAME', 'email': 'jjun@gmail.com'}, 
+{'fname': 'Andrew', 'lname': 'Lee', 'email': 'alee@gmail.com'}, 
+{'fname': 'Jay', 'lname': 'Patel', 'email': 'jpatel@gmail.com'},  
+{'fname': 'Eduardo', 'lname': 'Baikaa', 'email': 'ebaik@gmail.com'},  
+{'fname': 'fred', 'lname': 'jonesa', 'email': 'bob@jones.com'},  
+{'fname': 'fred', 'lname': 'jones', 'email': 'bob@jones.com'}, 
+{'fname': 'bob', 'lname': 'jones', 'email': 'bob@jones.com'}, 
+{'fname': 'bob', 'lname': 'jones', 'email': 'bob@jones.com'}, 
+{'fname': 'bob', 'lname': 'jones', 'email': 'bob@jones.com'}, 
+{'fname': 'bobs', 'lname': 'namer', 'email': 'bob@jones.com'}, 
+{'fname': 'bob', 'lname': 'jon', 'email': 'bob@jones.com'}, 
+{'fname': 'bob2', 'lname': 'jones2', 'email': '2@no.com'}, 
+{'fname': 'bob3', 'lname': 'jones3', 'email': '3@3.com'},  
+{'fname': 'bob5', 'lname': 'jones5', 'email': '5@5.com'},  
+{'fname': 'shannon', 'lname': 'jones', 'email': 'no@yes.com'}
+]
+
+Same as above, but no CR or LF:
+
+[{'fname': 'firstNAME', 'lname': 'LASTNAME', 'email': 'jjun@gmail.com'}, {'fname': 'Andrew', 'lname': 'Lee', 'email': 'alee@gmail.com'}, {'fname': 'Jay', 'lname': 'Patel', 'email': 'jpatel@gmail.com'},  {'fname': 'Eduardo', 'lname': 'Baikaa', 'email': 'ebaik@gmail.com'},  {'fname': 'fred', 'lname': 'jonesa', 'email': 'bob@jones.com'},  {'fname': 'fred', 'lname': 'jones', 'email': 'bob@jones.com'}, {'fname': 'bob', 'lname': 'jones', 'email': 'bob@jones.com'}, {'fname': 'bob', 'lname': 'jones', 'email': 'bob@jones.com'}, {'fname': 'bob', 'lname': 'jones', 'email': 'bob@jones.com'}, {'fname': 'bobs', 'lname': 'namer', 'email': 'bob@jones.com'}, {'fname': 'bob', 'lname': 'jon', 'email': 'bob@jones.com'}, {'fname': 'bob2', 'lname': 'jones2', 'email': '2@no.com'}, {'fname': 'bob3', 'lname': 'jones3', 'email': '3@3.com'},  {'fname': 'bob5', 'lname': 'jones5', 'email': '5@5.com'},  {'fname': 'shannon', 'lname': 'jones', 'email': 'no@yes.com'}]
+

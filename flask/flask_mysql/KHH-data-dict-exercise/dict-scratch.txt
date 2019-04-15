@@ -1,0 +1,175 @@
+                {% for key, value  in _dict.return_users()  %}
+            <tr>
+                    <td>    {{  key   }}   </td>
+                    <td>    {{  value   }}   </td>
+            </tr>                    
+                {% endfor %}
+
+
+
+            {% for key, value in _dict.iteritems() %}
+            <tr>
+                    <td>    {{  key   }}   </td>
+                    <td>    {{  value   }}   </td>
+            </tr>                    
+                {% endfor %}
+
+kent_h
+12:28 PM
+Andre,
+I am trying to do some learning on how dictionaries work ..or especially lists of dictionaries
+So I made the below which works:
+        {%   for the_users in return_users %}
+            <th scope="row">{{the_users["id"]}}</th>
+            <td>{{the_users["fname"] + " " +  the_users["lname"]  }}</td>
+            <td>{{the_users["email"]}}</td>                
+            <td>{{the_users["created_at"]}}</td>
+            <td>show edit delet
+                <a class="ActionsAnchor" href="/users/{{the_users['id']}}">show | </a>
+                <a class="ActionsAnchor" href="/users/{{the_users['id']}}/edit ">Edit | </a>
+                <a class="ActionsAnchor" href="/users/{{the_users['id']}}/destroy">Delete</a>
+            </td>
+
+        </tr>
+        {% endfor %}
+it gets its dictionary from a server.py file like this
+return render_template("/dict.html", return_users=all_users)
+all_users gets defined in the server.py file like this
+all_users = [{'fname': 'firstNAME', 'lnam.........
+I need a tutorial on how to define the dictionary inside of my html file instead of passing from server...so I can learn
+I will show you what i tried
+ta_andre profile image	
+ta_andre
+12:30 PM
+It’s best practice to have all your data in your server. You most likely never want to initialize or store data in your html because it’s accessible by anyone (edited)
+kent_h profile image	
+kent_h
+12:31 PM
+this did not work:
+             {% all_users = [{'fname': 'firstNAME', 'lname': 'LASTNAME', 'email': 'jjun@gmail.com'}]   %}
+
+        {%   for the_users in return_users %}
+Okay, but this is supposed to be a learning exercise...if I get it to work, then I will play around with changing things to see what happens
+However, if you think that is fruitless, I will do my experimenting in the server file
+ta_andre profile image	
+ta_andre
+12:32 PM
+The html is only used to display information 
+Yes practice all of this in your server instead
+kent_h profile image	
+kent_h
+12:32 PM
+but it runs that for loop
+okay
+I will do that
+I am trying to learn to be ready for the test...I don't want to waste time on a rabbit trail
+ta_andre profile image	
+ta_andre
+12:33 PM
+Jinja2 isn’t meant to handle that much data manipulation. It’s main purpose is to display data
+Same with all other tech stacks. You never want to create data on your template as it’s easily accessible via developer tools
+kent_h profile image	
+kent_h
+12:37 PM
+this:  return_users[0]
+resulted in this:  {'fname': 'firstNAME', 'lname': 'LASTNAME', 'email': 'jjun@gmail.com'}
+ta_andre profile image	
+ta_andre
+12:43 PM
+Yup that’s right
+kent_h profile image	
+kent_h
+12:53 PM
+should this work:
+            {{  return_users[1]['fname']     }}
+            {% for position in range(4): %}
+                <td>   {{ (return_users[position] }}   </td>
+            {% endfor %}
+I am trying to get it to display the first four list items
+ta_andre profile image	
+ta_andre
+12:54 PM
+Try it out
+kent_h profile image	
+kent_h
+12:57 PM
+no, I got an error
+my goal is to learn how to loop through each item in a list
+I have another idea
+kent_h profile image	
+kent_h
+1:07 PM
+this gives me all the first names in the list:                  {% for hopeful  in return_users %}
+                    <td>    {{  hopeful.fname|e    }}   </td>
+                {% endfor %}
+but I still can't figure how to get the lists to iterate...to show [0], then [1], [2], etc
+ta_andre profile image	
+ta_andre
+1:12 PM
+That should work. They way you are getting each object in the list
+Do you have 5 items in your list?
+if not, then create a dynamic range using the list's length
+kent_h profile image	
+kent_h
+1:13 PM
+no
+this is the full list
+  all_users = [ 
+    {'fname': 'Andrew', 'lname': 'Lee', 'email': 'alee@gmail.com'}, 
+    {'fname': 'Jay', 'lname': 'Patel', 'email': 'jpatel@gmail.com'},
+    {'fname': 'Eduardo', 'lname': 'Baikaa', 'email': 'ebaik@gmail.com'},
+    {'fname': 'fred', 'lname': 'jonesa', 'email': 'bob@jones.com'},
+    {'fname': 'fred', 'lname': 'jones', 'email': 'bob@jones.com'}, 
+    {'fname': 'bob', 'lname': 'jones', 'email': 'bob@jones.com'}, 
+    {'fname': 'bob', 'lname': 'jones', 'email': 'bob@jones.com'}, 
+    {'fname': 'bob', 'lname': 'jones', 'email': 'bob@jones.com'}, 
+    {'fname': 'bobs', 'lname': 'namer', 'email': 'bob@jones.com'}, 
+    {'fname': 'bob', 'lname': 'jon', 'email': 'bob@jones.com'}, 
+    {'fname': 'bob2', 'lname': 'jones2', 'email': '2@no.com'}, 
+    {'fname': 'bob3', 'lname': 'jones3', 'email': '3@3.com'},
+    {'fname': 'bob5', 'lname': 'jones5', 'email': '5@5.com'},
+    {'fname': 'shannon', 'lname': 'jones', 'email': 'no@yes.com'}]  
+ta_andre profile image	
+ta_andre
+1:14 PM
+Your 
+{% for position in range(4): %}
+                <td>   {{ (return_users[position] }}   </td>
+            {% endfor %}
+Should work then
+kent_h profile image	
+kent_h
+1:14 PM
+I want to be able to output 
+{'fname': 'Andrew', 'lname': 'Lee', 'email': 'alee@gmail.com'}  in one <td> then the next in another <td>   etc
+I just noticed that I either have an extra, or a missing parenthesis
+got it
+ta_andre profile image	
+ta_andre
+1:19 PM
+Yup check that unclosed parenthesis in the td
+kent_h profile image	
+kent_h
+1:21 PM
+this works:
+        {% for position in range(2):   %}
+        <tr>
+                <td>    {{ return_users[position] }}   </td>
+        </tr>                    
+        {% endfor %}
+so I tried getting them all returned with this
+        {% for position in range(len(return_users)):   %}
+        <tr>
+                <td>    {{ return_users[position] }}   </td>
+        </tr>                    
+        {% endfor %}
+However, Jinja complain that len is not a Python function...really?
+jinja2.exceptions.UndefinedError: 'len' is undefined
+this works:
+        {% for position in range(return_users|length):   %}
+        <tr>
+                <td>    {{ return_users[position] }}   </td>
+        </tr>                    
+        {% endfor %}
+What did I learn?  
+for one thing, jinja is not really just passing through Python...it does filters and such and changes things

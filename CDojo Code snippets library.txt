@@ -1,0 +1,629 @@
+
+
+
+
+>>>>>>>>>>>
+Setting/clearing session cookies
+    "We can't increment something that doesn't exist! Here's how to check if a key exists in session yet:"
+        if 'key_name' in session:
+            print('key exists!')
+        else:
+            print("key 'key_name' does NOT exist")
+
+    "If we want to get rid of what is currently stored in session:"
+        session.clear()		# clears all keys
+        session.pop('key_name')		# clears a specific key
+
+    Writing to cookies on server side:
+        session['username'] = request.form['name']
+        session['useremail'] = request.form['email']
+
+    Reading from cookies on client side 
+        <h3>{{session['username']}}</h3>
+        <h3>{{session['useremail']}}</h3>
+
+>>>>>>>
+session cookies login logout
+    But how do we keep track of them once they've logged in? I think you might already know...session! We can create a session variable that holds the user's id. From our study in database design, we know that if we have the id of any table we can gather the rest of the information that is associated with that id. Storing a single session variable with the user's id is all we need to access all the information associated with that user.
+
+>>>>>>>>
+Session variables, cookies:
+    Remember to import session
+    app = Flask(__name__)
+    app.secret_key = 'keep it secret, keep it safe' # set a secret key for security purposes
+
+    @app.route('/users', methods=['POST'])
+    def create_user():
+        print("Got Post Info")
+        # Here we add two properties to session to store the name and email
+        session['username'] = request.form['name']
+        session['useremail'] = request.form['email']
+        return redirect('/show')
+
+                -------------------
+    @app.route('/show')
+    def show_user():
+        return render_template('show.html', name_on_template=session['username'], email_on_template=session['useremail'])
+        >>>note that render_template is a function so xxxx = yyy is passing are parameters being passed in as key = value
+
+        >>>And using them in templates/the html files
+    @app.route('/show')
+    def show_user():
+        return render_template('show.html')
+        -----
+
+    file:  form_test/templates/show.html
+    <h1>User:</h1>
+    <h3>{{session['username']}}</h3>
+    <h3>{{session['useremail']}}</h3>
+
+>>>>>>>>>>
+Wes teaching on creating data dictionary then writing to session.  The key is 'form'
+        if "form" not in session:
+        data= {
+            "fname_submitted": "",
+            "lname_submitted": "",
+            "email_submitted": ""
+        }
+        session['form'] = data
+        .......
+            Then in html form   <input type="text" class="form-control"  name="lname_submitted" value= "{{ session['form']['lname_submitted'] }}">
+        ....He sent to me in chat:
+            From Wes Harper to Everyone:  05:32 PM 4/11/19
+                session['form'] = request.form
+                {{ session['form']['first_name'] }}
+                <input type="text" name="first_name" value="{{ session['form']['first_name'] }}"
+                From Wes Harper to Everyone:  05:57 PM
+                session['key_name'] = data
+
+                this was actually used and worked
+
+                    if "form" not in session:
+                        dataNameEmail= {
+                            "fname_submitted": "initial value",
+                            "lname_submitted": "",
+                            "email_submitted":  ""
+                        }
+                        session['form'] = dataNameEmail
+
+                        print("-"*80)
+                        print(dataNameEmail)
+                        print(session['form'])
+
+                value= "{{ session['form']['lname_submitted'] }}"
+                And this:  <h3>{{ session['form'] }}</h3>
+                    Produced this on web page output:  {'email_submitted': 'smtih@smith.com', 'fname_submitted': 'bob', 'lname_submitted': 'smith'}
+
+
+>>>>>
+Wes showed how to get all session data:
+    print(request.__dict__)
+
+
+>>>>>>>>>>>
+Example imports...learn each when convenient
+    from flask import Flask, render_template, request, redirect, session
+
+>>>>>>>>>>>
+A Python Flask shell:
+    from flask import Flask, render_template
+    app = Flask(__name__)
+    @app.route('/')
+    def index():
+        return render_template("index.html", phrase="hello", times=5)	# notice the 2 new named arguments!
+    if __name__=="__main__":
+        app.run(debug=True)
+
+    >>> in the index.html Showing how to catch values 
+        <h3>My Flask Template</h3>
+        <p>Phrase: {{ phrase }}</p>
+        <p>Times: {{ times }}</p>
+            
+        {% for x in range(0,times): %}
+            <p>{{ phrase }}</p>
+        {% endfor %}
+            
+        {% if phrase == "hello" %}
+        <p>The phrase says hello</p>
+        {% endif %}
+
+>>>>>>>>>>>
+Static files and folder structure:
+    <!-- based on the folder structure on the right -->
+    <!-- linking a css style sheet -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='my_style.css') }}">
+    <!-- linking a javascript file -->
+    <script type="text/javascript" src="{{ url_for('static', filename='my_script.js') }}"></script>
+    <!-- linking an image -->
+    <img src="{{ url_for('static', filename='my_img.png') }}">
+
+    Or
+
+    <!-- linking a css style sheet -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/my_style.css') }}">
+    <!-- linking a javascript file -->
+    <script type="text/javascript" src="{{ url_for('static', filename='js/my_script.js') }}"></script>
+    <!-- linking an image -->
+    <img src="{{ url_for('static', filename='img/my_img.png') }}">
+
+
+>>>>>>>>>>
+Looping throught data passed by rendering
+
+    @app.route('/lists')
+    def render_lists():
+        # Soon enough, we'll get data from a database, but for now, we're hard coding data
+        student_info = [
+        {'name' : 'Michael', 'age' : 35},
+        {'name' : 'John', 'age' : 30 },
+        {'name' : 'Mark', 'age' : 25},
+        {'name' : 'KB', 'age' : 27}
+        ]
+        return render_template("lists.html", random_numbers = [3,1,5], students = student_info)
+
+                ----------
+        <h1>Random Numbers</h1>
+        {% for number in random_numbers %}
+            <p>{{ number }}</p>
+        {% endfor %}
+        <h1>Students</h1>
+        {% for student in students %}
+            <p>{{ student['name'] }} - {{ student['age'] }}</p>
+        {% endfor %}
+
+
+>>>>>>>>>>>
+Getting data from a form
+
+    File:  form_test/server.py
+    from flask import Flask, render_template
+    app = Flask(__name__)
+    # our index route will handle rendering our form
+    @app.route('/')
+    def index():
+        return render_template("index.html")
+    if __name__ == "__main__":
+        app.run(debug=True)
+
+            -----
+    FILE: form_test/templates/index.html
+    <h1>Index Page</h1>
+    <h3>Create a User</h3>
+        <form action='/users' method='post'>
+        Name: <input type='text' name='name'>
+        Email: <input type='text' name='email'>
+        <input type='submit' value='create user'>
+    </form>
+
+
+            ---------
+    from flask import Flask, render_template, request, redirect # added request
+            
+    @app.route('/users', methods=['POST'])
+    def create_user():
+        print("Got Post Info")
+        print(request.form)
+        name_from_form = request.form['name']
+        email_from_form = request.form['email']
+        return render_template("show.html", name_on_template=name_from_form, email_on_template=email_from_form)
+
+
+    File:  form_test/templates/show.html
+    <h1>Show Page</h1>
+    <h3>Info Submitted:</h3>
+        <p>Name: {{ name_on_template }}</p>
+        <p>Email: {{ email_on_template }}</p>
+
+     <input type="hidden" id="custId" name="custId" value="3487">
+
+
+    The for attribute is used in labels. It refers to the id of the element this label is associated with.
+    For example:
+    <label for="username">Username</label>
+    <input type="text" id="username" name="username" />
+    Now when the user clicks with the mouse on the username text the browser will automatically put the focus in the corresponding input field. This also works with other input elements such as <textbox> and <select>
+
+
+
+
+>>>>>
+Get entire dictionary of form data coming from html 
+    ta_shannon  8:43 AM
+        try printing the form print(request.form) should show you all the keys/values in your terminal
+
+
+    ----and Todd:
+        kent_h
+        8:42 AM
+        request.form['key'] gets the value for key....how can I get all the key value pairs coming from the form?
+        New Messages
+        instructor_todd profile image	
+        instructor_todd
+        10:36 AM
+        request.form is your reference to the dictionary, therefore you can do something like .items() to iterate through all key-value pairs
+
+>>>>
+Some Python dictionary info...and about returning SQL
+    code
+        mysql = connectToMySQL(SCHEMA_NAME)
+        query = "select pw_hash from validated_users where email=%(em)s;"
+        print("query is  ", query)
+        data = {
+            "em": login_email
+        }
+        result = mysql.query_db(query, data)
+        matched_hashed_pw=result[0]['pw_hash']
+        print(type(matched_hashed_pw))
+        print("result with key and value: "  + str(result))
+        print("matching hashed PW:  " +  str(result[0]['pw_hash']))
+        print("variable matched_hashed_pw:  " + str(matched_hashed_pw))
+
+    Terminal Window
+        query is   select pw_hash from validated_users where email=%(em)s;
+        Running Query: select pw_hash from validated_users where email='jean@jones.com';
+        <class 'str'>
+        result with key and value: [{'pw_hash': '$2b$12$PoGbTYLdFEI3sGyA2QaeceJU42WRMb2gKDt9/d/PFnaO2AGl8VI6y'}]
+        matching hashed PW:  $2b$12$PoGbTYLdFEI3sGyA2QaeceJU42WRMb2gKDt9/d/PFnaO2AGl8VI6y
+        variable matched_hashed_pw:  $2b$12$PoGbTYLdFEI3sGyA2QaeceJU42WRMb2gKDt9/d/PFnaO2AGl8VI6y
+        127.0.0.1 - - [12/Apr/2019 09:29:15] "POST /login HTTP/1.1" 302 -
+
+
+>>>>>>>>>>
+Using redirects to solve multiple post/submit problem
+
+    Let's add a separate method that will be solely responsible for rendering the show page, and then change the last line of our method handling the POST data from render_template to redirect to the route that will render the page:
+
+    from flask import Flask, render_template, request, redirect # don't forget to import redirect!
+        
+    @app.route('/users', methods=['POST'])
+    def create_user():
+        print("Got Post Info")
+        print(request.form)
+        name = request.form['name']
+        email = request.form['email']
+        return redirect("/show")	# changed this line!
+        
+    # adding this method
+    @app.route("/show")
+    def show_user():
+        print("Showing the User Info From the Form")
+        print(request.form)
+        return render_template("show.html")
+
+
+
+
+
+
+>>>>>>>>>>
+CD's sample for connecting to database
+    from flask import Flask, render_template
+    from mysqlconnection import connectToMySQL    # import the function that will return an instance of a connection
+    app = Flask(__name__)
+    @app.route("/")
+    def index():
+        mysql = connectToMySQL('first_flask')	        # call the function, passing in the name of our db
+        friends = mysql.query_db('SELECT * FROM friends;')  # call the query_db function, pass in the query as a string
+        print(friends)
+        return render_template("index.html")
+                
+    if __name__ == "__main__":
+        app.run(debug=True)
+
+    
+>>>>>>>>>>
+Sample SQLs...from my users assignment
+    >>Select all
+    mysql = connectToMySQL("user_assignment")
+    all_users = mysql.query_db("SELECT * FROM user_table;")
+    return render_template("/readall.html", return_users=all_users)
+
+    >>Select all columns by index
+    query = "SELECT * FROM user_table where id = %(pt)s"
+    data = {
+        "pt": id
+    }
+    mysql = connectToMySQL("user_assignment")
+    one_user=mysql.query_db(query, data) 
+    return render_template("/readone.html", returning_one=one_user)
+
+    >>INSERT
+    mysql = connectToMySQL("user_assignment")
+    # coming from create.html will be fname, lname, email
+    query = "INSERT INTO user_table (fname, lname, email, created_at, updated_at) VALUES(%(fname_bydata)s, %(lname_bydata)s, %(email_bydata)s,NOW(), NOW())"
+
+    data = { 
+        "fname_bydata": request.form["fname_submitted"],
+        "lname_bydata": request.form["lname_submitted"],
+        "email_bydata": request.form["email_submitted"],
+    }
+    mysql = connectToMySQL("user_assignment")
+    new_user_id = mysql.query_db(query, data) 
+    session['user_id'] = new_user_id
+    return redirect("/users/" +str(new_user_id))
+
+    >>UPDATE 
+    mysql = connectToMySQL("user_assignment")
+    query = "UPDATE user_table SET fname = %(fname_bydata)s, lname = %(lname_bydata)s, email = %(email_bydata)s, updated_at=NOW() WHERE id=%(id_bydata)s;"
+
+    data = { 
+        "id_bydata": int(id),
+        "fname_bydata": request.form["fname_submitted"],
+        "lname_bydata": request.form["lname_submitted"],
+        "email_bydata": request.form["email_submitted"],
+    }
+    mysql = connectToMySQL("user_assignment")
+    updated_user_id = mysql.query_db(query, data) 
+    return redirect('/users/' + str(id))
+
+    >>>DELETE
+    mysql = connectToMySQL("user_assignment")
+
+    query = " delete from user_table WHERE id=%(id_bydata)s;"
+
+    data = { 
+        "id_bydata": int(id),
+    }
+    mysql = connectToMySQL("user_assignment")
+    mysql.query_db(query, data) 
+    return redirect("/users")
+
+    >>>>Samples of catching the database outputs in html
+
+    <h1 class="leftOfHOme">
+    Edit User {{returning_one[0]['id']}}
+    </h1>
+
+            {% for the_users in return_users %}
+            <th scope="row">{{the_users["id"]}}</th>
+            <td>{{the_users["fname"] + " " +  the_users["lname"]  }}</td>
+            <td>{{the_users["email"]}}</td>                
+            <td>{{the_users["created_at"]}}</td>
+            <td>show edit delet
+                <a class="ActionsAnchor" href="/users/{{the_users['id']}}">show | </a>
+                <a class="ActionsAnchor" href="/users/{{the_users['id']}}/edit ">Edit | </a>
+                <a class="ActionsAnchor" href="/users/{{the_users['id']}}/destroy">Delete</a>
+            </td>
+
+        </tr>
+        {% endfor %}
+
+>>>>>>>
+Flash messages and Validation
+    @app.route('/process', methods=['POST'])
+    def process():
+        is_valid = True
+        if len(request.form['fname']) < 1:
+            is_valid = False
+            flash("Please enter a first name")
+        if len(request.form['lname']) < 1:
+            is_valid = False
+            flash("Please enter a last name")
+        if len(request.form['occ']) < 2:
+            is_valid = False
+            flash("Occupation should be at least 2 characters")
+        
+        if not is_valid:
+            return redirectcopy("/")
+        else:
+            # add user to database
+            flash("Friend successfully added!")
+            return redirect("/")    # eventually we may have a different success route
+                ---------------
+    >>>>>on html
+    {% with messages = get_flashed_messages() %}     <!-- declare a variable called messages -->
+    {% if messages %}                            <!-- check if there are any messages -->
+        {% for message in messages %}            <!-- loop through the messages -->
+            <p>{{message}}</p>                   <!-- display each message in a paragraph tag -->
+        {% endfor %}
+    {% endif %}
+    {% endwith %}
+
+>>>>
+flash with categories
+    flash("Email cannot be blank!", 'email')
+
+
+>>>>
+Pattern Validation
+    some_project/server.py
+    import re	# the regex module
+    # create a regular expression object that we'll use later   
+    EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$') 
+    @app.route('/process', methods=['POST'])
+    def submit():
+        if not EMAIL_REGEX.match(request.form['email']):    # test whether a field matches the pattern
+            flash("Invalid email address!")
+
+
+
+
+
+>>>>
+MySQLConnection
+    This requirs an import
+
+    It includes:  def query_db(self, query, data=None):
+        Whidh is used to process query's the CD way
+        note that what it returns depends on the query type
+        For example:  Insert returns user id
+                select returns everything
+                    update and delete return nothing
+
+
+
+>>>>>>>>>>
+Semple render_template redirects  how they work and difference
+
+    4/11/19  8:48 AM
+    Good morning Claire
+    I have done these assignments, but before proceeding I want to understand more than just be doing, so I am looking back at how things seem to really work
+    in my previous assignment, I have this statement:  return render_template("success.html" , email_on_template=email_from_form, return_users=all_users)
+    It works fine but the page returned does not have "success.html" in the address box.  instead it has http://localhost:5000/users
+    but the html page it is displaying is the success.html content
+    is that normal/standard that the url resulting from a render_template will have a route showing in the URL/address box in the browser?
+    why does it say "/users"  My only guess is because that is the route that sent it there....
+    instructor_claire9:33 AM
+    yeah so that's the difference between static websites and ones using a framework
+
+        -----------
+
+    ta_shannon 7:44 AM 4/11/19
+    redirect redirects to another route
+    so for example, using the ideas I suggested above, if your browser is on the /login route, the redirect would change that url to /success. 
+    when that route is hit, the logic for that route is performed
+
+    so app.route('/whatever') is the actual route... when the browser hits this url the logic below, in the immediately following def name_of_logic(): is performed and those always end with either a render_template (show an html page) or redirect (to another route to do the ^ again)
+
+>>>>>>>>>>
+return redirect versus return template
+    ta_shannon  04/11/197:45 AM
+    so app.route('/whatever') is the actual route... when the browser hits this url the logic below, in the immediately following def name_of_logic(): is performed and those always end with either a render_template (show an html page) or redirect (to another route to do the ^ again)
+
+    Note from Todd:  always start off the URLs with the slash as in /users or else some previous/unknown string/path will prepend
+
+    Note from Wes:  parameters in return template are always xxx=yyy because they are key value pairs or some such
+
+    From tutorialspoint:
+        Flask class has a redirect() function. When called, it returns a response object and redirects the user to another target location with specified status code.
+
+
+
+    Samples that worked:
+        return redirect("/users")
+        return render_template("/readall.html", return_users=all_users)
+        return render_template("/readone.html", returning_one=one_user)
+        return render_template("/create.html")
+        return redirect("/users/" +str(new_user_id))
+
+>>>>>>>>>>>>>>
+html forms 
+              <form action="/login" method="POST">
+                <div class="form-group"></div>
+                    <label for="fname_submitted">First Name:</label>
+                    <input type="text" class="form-control" name="fname_submitted" value=  {{returning_one[0]['fname']}} >
+                </div>
+                <div>
+                    <label for="lname_submitted">Last Name:</label>
+                    <input type="text" class="form-control"  name="lname_submitted" value= {{returning_one[0]['lname']}} ></p>
+                </div>
+                <div>
+                    <label for="email_submitted">Email:</label>
+                    <input type="text" class="form-control"  name="email_submitted" value= {{returning_one[0]['email']}} ></p>
+                </div>
+                <div>
+                    <label for="email_submitted">Password:</label>
+                    <input type="text" class="form-control"  name="email_submitted" value= {{returning_one[0]['email']}} ></p>
+                </div>
+                <div>
+                    <label for="email_submitted">Cofirm Password:</label>
+                    <input type="text" class="form-control"  name="email_submitted" value= {{returning_one[0]['email']}} ></p>
+                </div>
+              <input type="submit" value="Update">
+
+>>>>>>
+Wes on when to use redirect:
+        Rule:  If sending a form to a route, none of the returns on that route will send directly to template
+            A route that does have a return render_template likely does come in straight from a user, but might require a cookie to be set
+
+>>>>>>>>>>>
+Checking for all alpha like for regist and logins assnmnt
+    NAME_REGEX = re.compile(r'^[a-zA-Z]+$')
+            if not NAME_REGEX.match(request.form['email']):    # test whether a field matches the pattern
+            flash("Invalid email address!")
+
+    str.isalpha()
+
+>>>>
+flashing flash
+        http://flask.pocoo.org/docs/1.0/patterns/flashing/
+
+        flash("You are now logged in", "loginO " )
+
+        {% with messagesT = get_flashed_messages(category_filter=["loginO"]) %}     <!-- declare a variable called messages -->
+            {% if messagesT %}                            <!-- check if there are any messages -->
+                {% for messageL in messagesT %}            <!-- loop through the messages -->
+                    <p>{{messageL}}</p>                   <!-- display each message in a paragraph tag -->
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+
+>>>>>>>>>>
+hash passwords bcrypt
+    from flask_bcrypt import Bcrypt        
+    bcrypt = Bcrypt(app)     # we are creating an object called bcrypt, 
+                         # which is made by invoking the function Bcrypt with our app as an argument
+
+    To generate a hash, provide the password to be hashed as an argument
+        bcrypt.generate_password_hash(password_string)
+    To compare passwords, provide the hash as the first argument and the password to be checked as the second argument
+        bcrypt.check_password_hash(hashed_password, password_string)        
+
+        @app.route('/createUser', methods=['POST'])
+        def create():
+            # include some logic to validate user input before adding them to the database!
+            # create the hash
+            pw_hash = bcrypt.generate_password_hash(request.form['password'])  
+            print(pw_hash)  
+            # prints something like b'$2b$12$sqjyok5RQccl9S6eFLhEPuaRaJCcH3Esl2RWLm/cimMIEnhnLb7iC'
+            # be sure you set up your database so it can store password hashes this long (60 characters)
+            mysql = connectToMySQL("mydb")
+            query = "INSERT INTO users (username, password) VALUES (%(username)s, %(password_hash)s);"
+            # put the pw_hash in our data dictionary, NOT the password the user provided
+            data = { "username" : request.form['username'],
+                    "password_hash" : pw_hash }
+            mysql.query_db(query, data)
+            # never render on a post, always redirect!
+            return redirect("/")
+
+        @app.route('/login', methods=['POST'])
+        def login():
+            # see if the username provided exists in the database
+            mysql = connectToMySQL("mydb")
+            query = "SELECT * FROM users WHERE username = %(username)s;"
+            data = { "username" : request.form["username"] }
+            result = mysql.query_db(query, data)
+            if len(result) > 0:
+                # assuming we only have one user with this username, the user would be first in the list we get back
+                # of course, we should have some logic to prevent duplicates of usernames when we create users
+                # use bcrypt's check_password_hash method, passing the hash from our database and the password from the form
+                if bcrypt.check_password_hash(result[0]['password'], request.form['password']):
+                    # if we get True after checking the password, we may put the user id in session
+                    session['userid'] = result[0]['id']
+                    # never render on a post, always redirect!
+                    return redirect('/success')
+            # if we didn't find anything in the database by searching by username or if the passwords don't match,
+            # flash an error message and redirect back to a safe route
+            flash("You could not be logged in")
+            return redirect("/")
+
+
+
+
+
+
+
+
+
+
+
+
+>>>>>>>>>>>>javascript
+
+>>>>
+loop associative array aka dictionary aka object
+    var person = {fname:"John", lname:"Doe", age:25}; 
+    
+    var text = "";
+    var x;
+    for (x in person) {
+        text += person[x] + ":  for x = " + x + " "
+    }
+    document.getElementById("demo").innerHTML = text ;
+
+
+
+
+
+

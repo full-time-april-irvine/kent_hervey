@@ -40,24 +40,6 @@ def create_user():
 
 
 
-        # if len(name_from_form) <1:
-        #     is_valid = False
-        #     flash("Please enter something")
-
-        # if len(location_from_form) <1:
-        #     is_valid = False
-        #     flash("Please enter something")
-
-        # if len(language_from_form) <1:
-        #     is_valid = False
-        #     flash("Please enter something")
-
-        # if len(comment_from_form) <5:
-        #     is_valid = False
-        #     flash("Please enter some comments.  At least 5 characters.")
-
-
-
 
 
         mysql = connectToMySQL("emai_val")
@@ -74,8 +56,12 @@ def create_user():
 
         flash("Data added")
 
-        return render_template("success.html", email_on_template=email_from_form)
+        mysql = connectToMySQL("emai_val")
+        all_users = mysql.query_db("SELECT * FROM email_table;")
 
+
+        return render_template("success.html" , email_on_template=email_from_form, return_users=all_users)
+#, email_on_template=email_from_form      , all_users
 
 
 if __name__ == "__main__":

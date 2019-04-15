@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <title>Display All Users</title>
+</head>
+<body>
+
+<div class="container">
+aaaaaa
+    <div id="allRXmessages">
+        <h3>Message(s) For You</h3>
+        {%   for the_senders in return_users %}
+        <div class="repeatingMessageBox">
+            <div class="messageSide">
+                <p>{{the_senders['fname']}} said</p>
+                <p>&nbsp;{{the_senders['message_content']}}</p>
+
+            </div> <!--End message side of message box-->
+           
+            <a class="deleteAnchor" href="/deleteMessage/{{the_senders['messageID']}}" >Delete or img tag</a>
+        </div> <!--End div box that repeats for received messages-->
+        {% endfor %}
+
+    </div> <!-- End RX message box-->
+
+    <div>
+    {{  return_users[1]     }} 
+    {%   for the_users in return_users %}
+        <form action="/messageSend" method="POST"> <!-- One of these forms will display for each recipient so we can send to any of them -->
+
+        <label for="recipientName">{{the_users['fname']}}</label> <!--recipientName displayed here as received from /wall route-->
+        <input type="textarea" class="" id="recipientName" name="sentMessageContent" value=  "">
+        <input type="hidden" id="recipientID" name="recipientID" value="{{the_users['receiver_id']}}"> <!--Need recipients id here so /messageSend route knows how to record sender in database.  /wall route populates it, and if this form's submit is clicked, it goes back-->
+        <input type="hidden" id="" name="sendersID" value="{{the_users['sender_id']}}"> <!--Need sender's id here so /messageSend route knows how to record sender in database.  /wall route populates it, and if this form's submit is clicked, it goes back-->
+        <input type="submit" value="Send">
+
+        </form>
+    {% endfor %}
+    </div>
+</div>
+
+    </body>
+    </html>
+
+

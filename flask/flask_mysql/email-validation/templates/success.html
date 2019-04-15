@@ -14,7 +14,14 @@
 
         </div>
         <div>
-            
+            <p>Email addresses entered</p>
+                    {% for the_users in return_users %}
+                        <p>{{the_users["email"]}}  </p>           
+        
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
 
         </div>
 
