@@ -1,8 +1,12 @@
 from flask import Flask, render_template, request, redirect, session
 from mysqlconnection import connectToMySQL    # import the function that will return an instance of a connection
 
+SCHEMA_NAME = "khhpracticelearn041519"
+
 app = Flask(__name__)
 app.secret_key ='asdfeeffefa' 'keep it secret, keep it safe' # set a secret key for security purposes
+
+
 
 # Database name:  user_assignment
 # Table name:  user_table
@@ -26,6 +30,9 @@ def formex():
     {'sender_id': 4, 'receiver_id': 5,'fname': 'fred', 'lname': 'jones', 'email': 'bob@jones.com', 'message_content': 'blah blah 5   5 5 5 5 51', 'messageID': 3}, 
     {'sender_id': 4, 'receiver_id': 5,'fname': 'bob', 'lname': 'jones', 'email': 'bob@jones.com', 'message_content': 'blah blah 1 666666  66661', 'messageID': 5}
     ]  
+
+    print("all users first list item" + all_users[0])
+
 
     tester = 5
 
@@ -66,8 +73,27 @@ def learnd():
     return render_template("/dict.html", return_users=all_users)
     #return render_template("/dict.html")
 
+@app.route('/sql', methods=["GET"])   #  /users - GET - method should return a template that displays all the users in the table
+def sql():
+    mysql = connectToMySQL(SCHEMA_NAME)
+    query = "select * from users where email ='donald@duck.com';"
 
+    print(query)
 
+    result = mysql.query_db(query)
+
+    print("below is result")
+    print(result) #prints [{'user_id': 3, 'fname': 'Donald', 'lname': 'Duck', 'email': 'donald@duck.com', 'created_at': datetime.datetime(2019, 4, 15, 13, 33, 38)}]
+
+    print("below is learning test")
+    print(result[0]['email']) # prints donald@duck
+
+    return redirect('/sql')
+
+#Below is leftover samples...not used
+
+#########################################
+#############################################################
 
 @app.route('/users', methods=["GET"])   #  /users - GET - method should return a template that displays all the users in the table
 def all_user():

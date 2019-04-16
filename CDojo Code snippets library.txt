@@ -119,9 +119,11 @@ A Python Flask shell:
         <p>Phrase: {{ phrase }}</p>
         <p>Times: {{ times }}</p>
             
-        {% for x in range(0,times): %}
-            <p>{{ phrase }}</p>
-        {% endfor %}
+        ####Wes:  Don't use the below in Python Stack month...no need for indexes
+            {% for x in range(0,times): %}
+                <p>{{ phrase }}</p>
+            {% endfor %}
+        ##########
             
         {% if phrase == "hello" %}
         <p>The phrase says hello</p>
@@ -244,6 +246,8 @@ Get entire dictionary of form data coming from html
 
 >>>>
 Some Python dictionary info...and about returning SQL
+    At top 
+        SCHEMA_NAME = "private_wall"
     code
         mysql = connectToMySQL(SCHEMA_NAME)
         query = "select pw_hash from validated_users where email=%(em)s;"
@@ -598,7 +602,9 @@ hash passwords bcrypt
             flash("You could not be logged in")
             return redirect("/")
 
-
+>>>>>>>>>>
+End Python execution
+import sys; sys.exit(0)
 
 
 

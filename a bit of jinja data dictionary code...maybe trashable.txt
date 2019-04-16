@@ -1,0 +1,46 @@
+
+
+
+            {% for the_users in return_users %}
+                <th scope="row">{{the_users["id"]}}</th>
+                <td>{{the_users["fname"] + " " +  the_users["lname"]  }}</td>
+                <td>{{the_users["email"]}}</td>                
+                <td>{{the_users["created_at"]}}</td>
+                <td>show edit delet
+                    <a class="ActionsAnchor" href="/users/{{the_users['id']}}">show | </a>
+                    <a class="ActionsAnchor" href="/users/{{the_users['id']}}/edit ">Edit | </a>
+                    <a class="ActionsAnchor" href="/users/{{the_users['id']}}/destroy">Delete</a>
+                </td>
+
+            </tr>
+            {% endfor %}
+
+
+kent_h
+12:57 PM
+Question, please
+This works, but there is only one record/dictionary, in the list, so I don't think I really need the for loop...
+I should be able to say:  get the value for the key of id for the only item/dictionary in the list...right?
+    {% for the_users in returning_one %}
+    User # {{the_users['id']}}
+    {% endfor %}        
+    {% for the_users in returning_one %}
+    User # {{the_users['id']}}
+    {% endfor %}
+
+kent_h
+1:05 PM
+This outputs the entire dictionary as below, but I only want the value for the key of id:
+{{returning_one[0]}}
+produces
+{'id': 2, 'fname': 'Andrew', 'lname': 'Lee', 'email': 'alee@gmail.com', 'created_at': datetime.datetime(2019, 4, 9, 0, 3, 58), 'updated_at': datetime.datetime(2019, 4, 9, 0, 3, 58)}
+Answer:  This worked:  {{returning_one[0]['id']}}
+I hope that helps somebody else
+
+
+
+
+
+
+
+

@@ -1,0 +1,10 @@
+Got the server running at 9:57
+It displayed:  this is the equivalent of @app.route('/')!
+
+
+
+Which seems to come from views.py inside of apps folder in the project:
+    from django.shortcuts import render, HttpResponse
+    def index(request):
+        return HttpResponse("this is the equivalent of @app.route('/')!")
+
