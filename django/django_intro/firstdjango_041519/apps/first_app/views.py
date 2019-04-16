@@ -1,4 +1,4 @@
 
 from django.shortcuts import render, HttpResponse
 def index(request):
-    return HttpResponse("this is the exquivalent of @app.route('/')!")
+    return HttpResponse("<h2>this is the Shannon is helpful of @app.route('/')!</h2>")
