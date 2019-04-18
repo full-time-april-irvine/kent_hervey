@@ -1,0 +1,58 @@
+
+
+
+#LoginSide{
+    display: inline-block;
+    width: 40%;
+    vertical-align: top;
+}
+
+#RegisterSide{
+    display: inline-block;
+    width: 40%;
+    vertical-align: top;
+}
+
+#leftReceivedMessages{
+    display: inline-block;
+    width: 40%;
+    vertical-align: top;
+    border-right: solid 1px black;
+
+}
+
+#rightSendMessages{
+
+    display: inline-block;
+    width: 40%;
+    vertical-align: top;
+    border-left: solid 1px black;
+}
+
+form {
+    margin-left: 25px;
+}
+
+p { /* just to test whether css file is connecting */
+    font-style: italic;
+}
+
+.repeatingMessageBox {
+    margin-left: 25px;
+    border-bottom: solid 1px black ;
+}
+
+.messageSide {
+    width: 50%;
+    display: inline-block
+}
+
+<div class="messageSide">
+    <p>Jay said</p>
+    <p>&nbsp;blah blah 222 22222 11111 1111</p>
+
+</div> <!--End message side of message box-->
+
+<a class="deleteAnchor" href="/deleteMessage/3">Delete or img tag</a>
+</div>
+
