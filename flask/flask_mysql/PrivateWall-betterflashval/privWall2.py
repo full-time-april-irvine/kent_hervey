@@ -79,14 +79,17 @@ def register():
         flash("Last name must be all alpha and at least 2 characters.", "register")
 
     if not EMAIL_REGEX.match(request.form["email_submitted"]):    # test whether a field matches the pattern
+        valid=False
         flash("Invalid email address!", "register")
         print("you should have entered something")
 
     if (len(request.form['pw_submitted']) < 7):
+        valid=False
         flash("Password must be at least 7 characters.", "register")
 
     if (request.form['pw_submitted'] !=  request.form['pwconf_submitted']):
         flash("Confirmation password did not match.", "register")
+        valid=False
 
     retrievedEmail =  request.form['email_submitted'] 
 

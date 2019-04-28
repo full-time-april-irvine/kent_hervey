@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Success Page</title>
+</head>
+<body>
+        {% with messagesT = get_flashed_messages(category_filter=["success"]) %}     <!-- declare a variable called messages -->
+        {% if messagesT %}                            <!-- check if there are any messages -->
+            {% for messageL in messagesT %}            <!-- loop through the messages -->
+                <p>{{messageL}}</p>                   <!-- display each message in a paragraph tag -->
+            {% endfor %}
+        {% endif %}
+        {% endwith %}
+        
+            <p>Welcome, you have been logged in,  {{ session['session_fname'] }} </p>
+            
+            <a href="/logout">logout</a>
+
+
+
+
+</body>
+</html>

@@ -37,9 +37,9 @@ p { /* just to test whether css file is connecting */
     font-style: italic;
 }
 
-.bookblock {
+.repeatingMessageBox {
     margin-left: 25px;
-    border-bottom: solid 1px black;
+    border-bottom: solid 1px black ;
 }
 
 .messageSide {
@@ -47,7 +47,11 @@ p { /* just to test whether css file is connecting */
     display: inline-block
 }
 
+<div class="messageSide">
+    <p>Jay said</p>
+    <p>&nbsp;blah blah 222 22222 11111 1111</p>
 
+</div> <!--End message side of message box-->
 
 <a class="deleteAnchor" href="/deleteMessage/3">Delete or img tag</a>
 </div>

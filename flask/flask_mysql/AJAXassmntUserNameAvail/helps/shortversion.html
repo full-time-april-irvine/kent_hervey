@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Short version</title>
+	<script type="text/javascript" src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+	<script type="text/javascript">
+	$(document).ready(function(){
+        $(".hidden").hide();
+
+
+    $( "#val" ).keyup(function() {
+        console.log("bdddusted")
+        console.log("should be data" + data)
+    })
+
+
+    $( "#regForm" ).keyup(function() {
+        console.log("bdddusted")
+        var data = $("#regForm").serialize()   // capture all the data in the form in the variable data
+        data=data+"---"
+        console.log("should be data" + data)
+        $.ajax({
+                method: "POST",   // we are using a post request here, but this could also be done with a get
+                url: "http://username",
+                data: data
+            })
+            .done(function(res){
+                $('#usernameMsg').html(res)  // manipulate the dom when the response comes back
+            })
+        })
+})
+
+	</script>
+	<style type="text/css">
+		.green {
+			color:green;
+		}
+	</style>
+</head>
+<body>
+
+
+
+    <form action="#" method="post" id="regForm">
+        <div id="usernameMsg"></div>   <!-- notice the empty div reserved for our message -->
+        <input id="username" type="text">
+        <button type="submit">Submit</button>
+    </form>
+
+
+	<fieldset>
+		<legend>val</legend>
+		<p>Retreives or set a value of an input</p>
+		<input type="text" name="name" id="val" value="asxef">
+		<button class="val">Click to retreive the value of the input. Look in your console</button>
+		<button class="val2">click to change the value of the input to "minh"</button>
+	</fieldset>

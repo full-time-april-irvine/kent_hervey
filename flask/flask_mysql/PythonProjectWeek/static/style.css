@@ -1,0 +1,47 @@
+.custom-body {
+    background-color: lightblue;
+  }
+
+#container {
+    border:  solid 1px gray;
+    width:  1050px;
+    padding:  25px;
+    background-color: rgb(0, 5, 5);
+    margin: black;
+}
+
+h6 {
+    padding:10px;
+    margin-top:44px  !important;
+    background-color:  rgb(255, 255, 255);
+    text-align:center;
+}
+
+.search-header {
+    font-size: 24px;
+    text-decoration: underline;
+
+}
+
+.go-back{
+    font-size: 18px;
+    color: rgb(0, 0, 197) !important;
+    text-decoration: underline !important;
+    margin-left: 500px;
+
+}
+
+.wikilink{
+    color: rgb(0, 0, 226) !important;
+    font-weight:bolder;
+
+}
+
+ .table-striped > tbody > tr:nth-child(2n) > td, .table-striped > tbody > tr:nth-child(2n) > th {
+    background-color: rgb(91, 255, 91);
+ }
+
+.table-striped > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {
+    background-color: rgb(204, 255, 204);
+ }
+

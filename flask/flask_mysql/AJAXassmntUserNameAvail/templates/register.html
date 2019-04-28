@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+
+    <title>Register Demo</title>       
+    <script>
+            $(document).ready(function(){
+              console.log("test1")
+              $('#username').keyup(function(){
+                console.log("test2")
+                var data = $("#regForm").serialize()   // capture all the data in the form in the variable data
+                console.log("data should be: " + data)
+                $.ajax({
+                  method: "POST",   // we are using a post request here, but this could also be done with a get
+                  url: "/username",
+                  data: data
+                })
+                .done(function(res){
+                   $('#usernameMsg').html(res)  // manipulate the dom when the response comes back
+                })
+              })
+
+            })
+
+
+
+    </script>
+
+
+    
+</head>
+<body>
+  <div class ="container" >
+    <h1>Login and Registration</h1>
+
+      <div id="RegisterSide">
+
+        <h2>Register here!</h2>
+
+        <form action="/register" method="POST"  id="regForm" >
+
+          <div id="usernameMsg"></div>   <!-- notice the empty div reserved for our message -->
+          <input id="username" type="text"  name="username" value="">
+          <button type="submit">Submit</button>
+
+        </form>
+
+      </div> <!--End RegisterSide-->
+
+  
+
+  </div>
+
+</body>
+</html>

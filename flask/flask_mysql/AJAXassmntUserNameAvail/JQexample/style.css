@@ -1,0 +1,9 @@
+.container{
+    width: 958px;
+    background-color:  gray;
+}
+
+
+button{
+    display: inline-block;
+}

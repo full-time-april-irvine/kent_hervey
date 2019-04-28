@@ -1,0 +1,33 @@
+#There routes:  /     
+/register  
+/login  
+/books -  success pagebooks renders allbooks.html
+/books/<bookID> - renders single book
+/addbook is aobut adding a book to books table 
+/addFav/<bookID>      
+/unfavorite/<bookID>  
+/updateDescription<bookID> 
+/logout
+
+users
+id
+fname
+lname
+email
+pw_hash
+
+books
+id
+added_by_id
+desc
+title
+created_at
+updated_at
+
+favorited
+id
+book_id
+fav_by_id
+cre
+up
+

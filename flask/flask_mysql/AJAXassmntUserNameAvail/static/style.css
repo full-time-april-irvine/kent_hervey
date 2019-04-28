@@ -1,0 +1,25 @@
+
+
+
+#LoginSide{
+    display: inline-block;
+    width: 40%;
+    vertical-align: top;
+}
+
+#RegisterSide{
+    display: inline-block;
+    width: 40%;
+    vertical-align: top;
+}
+
+.lost_activities {
+    display: block;
+    color: red;
+    align-items: center;
+    margin-left: 0px;
+    margin-bottom: 2px;
+    margin-top: 2px;
+
+}
+

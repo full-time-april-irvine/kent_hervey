@@ -607,9 +607,66 @@ End Python execution
 import sys; sys.exit(0)
 
 
+>>>>>>>>>>>
+Using Python IN keyword to check for presence:
+    Check if "banana" is present in the list:
+
+    fruits = ["apple", "banana", "cherry"]
+
+    if "banana" in fruits:
+    print("yes")
 
 
+>>>>>>>>>>>>
+Rebuilding catalog adding key counting likes for each quotation
+        query = """select likes.id, likes.quote_liked_id, likes.user_liked_id from likes;"""
+        mysql = connectToMySQL(SCHEMA_NAME)
+        allLikes =mysql.query_db(query)
 
+        query = """select quotes.id, quote_author_name, quotes.quote_text, quote_added_by_id, users.fname, users.lname from quotes
+                join users on quote_added_by_id=users.id;"""
+        mysql = connectToMySQL(SCHEMA_NAME)
+        allQuotes =mysql.query_db(query)
+
+        for Qdicts in allQuotes:
+
+            for Ldicts in allLikes:
+
+                if Qdicts['id'] == Ldicts['quote_liked_id']:
+                    print("quote id" + str(Qdicts['id']) + " was liked by user " + str(Ldicts['user_liked_id']))
+                    if 'NumberLikes' in Qdicts:
+                        Qdicts['NumberLikes'] =Qdicts['NumberLikes']+1
+                    else:
+                        Qdicts['NumberLikes'] =1
+                else:
+                    pass
+                if 'NumberLikes' not in Qdicts:
+                    Qdicts['NumberLikes'] =0
+        for Qdicts in allQuotes:
+            pass
+            #print(Qdicts)
+            #print("\n")
+                        
+        return render_template("success.html", allQuotes=allQuotes)
+
+>>>>>>>>>>>>
+Go back button
+    Flask:  <a href={{request.referrer}}>Another go back using Flask </a>
+
+    In Javascript:
+        <script>
+        function goBack() {
+            window.history.back()
+        }
+        </script>
+        <button onclick="goBack()">Go Back</button>
+
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>MySQL
+The timedate defaults
+    created_at.........NOW()
+    updated_at...........NOW() ON UPDATE NOW()
 
 
 
